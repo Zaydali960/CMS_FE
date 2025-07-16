@@ -7,6 +7,33 @@
   pointer-events: none;
 }
 
+.block-hover {
+  transition: border 0.2s ease-in-out;
+}
+
+.block-hover:hover {
+  border: 2px solid red;
+}
+
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 10px solid black; /* this is the visible bottom side */
+}
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 10px solid black; /* visible wide base at bottom */
+}
+
+/* .triangle-down:hover {
+  border-left-color: red;
+  transform: rotate(20deg) scale(1.1);
+} */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -27,6 +54,21 @@
 .App-link {
   color: #61dafb;
 }
+.box{
+  width: 66px;
+  height: 72px;
+  background-color: white;
+  border: 2px solid rgb(212, 212, 212);
+}
+
+.add-card{
+  height: 100px;
+  width: 100px;
+  border: 2px solid gray;
+}
+
+
+
 
 @keyframes App-logo-spin {
   from {
