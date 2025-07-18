@@ -13,7 +13,8 @@ const Pages = () => {
 
   useEffect(() => {
     if (getPages) {
-      setLocalPages(getPages);
+      const pages = getPages.filter(page => page.slug !== "/")
+      setLocalPages(pages);
     }
   }, [getPages]);
 

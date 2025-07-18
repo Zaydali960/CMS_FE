@@ -65,16 +65,16 @@ const Footer = () => {
   const tertiaryColor = siteData?.tertiaryColor || '#222831'; // used as background
 
   return (
-    <footer className="pt-5" style={{ backgroundColor: tertiaryColor, color: primaryColor }}>
+    <footer className="pt-5" style={{ backgroundColor: tertiaryColor, color: secondaryColor }}>
       <div className="container">
         <div className="row">
           {/* Logo + Description + Social Icons */}
           <div className="col-md-3 mb-4">
-            <h4 style={{ color: primaryColor }}>{footerData.logo}</h4>
+            <h4 style={{ color: secondaryColor }}>{footerData.logo}</h4>
             <p>{footerData.description}</p>
             <div className="d-flex gap-3">
               {footerData.socialIcons.map((icon, index) => (
-                <a href="#" key={index} style={{ color: primaryColor }}>
+                <a href="#" key={index} style={{ color: secondaryColor }}>
                   <i className={icon.iconClass}></i>
                 </a>
               ))}
@@ -84,7 +84,7 @@ const Footer = () => {
           {/* Dynamic Columns */}
           {footerData.columns.map((col, index) => (
             <div className="col-md-3 mb-4" key={index}>
-              <h5 style={{ color: primaryColor }}>{col.heading}</h5>
+              <h5 style={{ color: secondaryColor }}>{col.heading}</h5>
               <ul className="list-unstyled">
                 {col.links.map((item, i) => (
                   <li key={i} className="mb-2">
@@ -92,7 +92,7 @@ const Footer = () => {
                       <a
                         href={item.link}
                         className="text-decoration-none"
-                        style={{ color: primaryColor }}
+                        style={{ color: secondaryColor }}
                       >
                         {item.name}
                       </a>

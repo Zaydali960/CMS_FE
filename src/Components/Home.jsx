@@ -152,14 +152,25 @@ const Home = () => {
   return (
     <>
       <div>
-        {page?.components?.map((block, idx) => {
+        {page?.components?.length === 0 ? (
+          <div className="text-center my-4">
+            <p>No components added to this page yet.</p>
+            {token && (
+              <button className="btn btn-warning rounded-circle" onClick={() => {
+                setShowModal(true);
+                setNewCompIdx(-1);
+              }}>+</button>
+            )}
+          </div>
+        ) : (
+        page?.components?.map((block, idx) => {
           const Component = componentMap[block.type];
           if (!Component) return null;
           return (
             <div key={idx} className="text-center">
-              <div className="block-hover py-3" style={{ minHeight: "100px" }}>
+              <div className={`${token ? "block-hover": ""}`} style={{ minHeight: "100px" }}>
                 {token && <div onClick={() => moveUp(idx)} className="triangle-up mx-auto mb-3 "></div>}
-               { token && <div className='position-relative mx-3 h4 ' style={{ minHeight: '40px' }}>
+                {token && <div className='position-relative mx-3 h4 ' style={{ minHeight: '40px' }}>
                   <div className="position-absolute top-0 end-0" style={{ cursor: 'pointer' }}>
                     {(block.type === "banner" || block.type === "carousal") && (
                       <i className="fa-solid fa-image me-3"
@@ -203,7 +214,8 @@ const Home = () => {
               </div>}
             </div>
           );
-        })}
+        })
+        )}
       </div>
 
       {showModal && (

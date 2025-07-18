@@ -5,7 +5,6 @@ import AppContext from '../Context/appContext';
 import Carousal from './CategoryPageComponents/Carousal';
 import Cards from './CategoryPageComponents/Cards';
 import Banner from './CategoryPageComponents/Banner';
-import Description from './Home Components/Paragraph';
 import Paragraph from './Home Components/Paragraph';
 
 const componentMap = {
@@ -38,16 +37,10 @@ const defaultProps = {
   paragraph: {
     text: "This is a new paragraph"
   },
-  promoCards: {
-    text1: "Men's Wear",
-    image1: "../../Image/Boy Fashion.png",
-    text2: "Women's Wear",
-    image2: "../../Image/Girl Fashion.png",
-  }
 };
 
 const CategoryPage = () => {
-  const { getPages, fetchPages, setNewPage, categoryUpdatePages, setCategoryUpdatePages } = useContext(AppContext);
+  const { getPages, fetchPages, setCategoryUpdatePages } = useContext(AppContext);
   const { slug } = useParams();
 
   const [page, setPage] = useState({});
@@ -58,7 +51,6 @@ const CategoryPage = () => {
   const [editImageModalIndex, setEditImageModalIndex] = useState(null);
   const [loadingImage, setLoadingImage] = useState(false);
   const token = localStorage.getItem('authToken');
-  
 
   useEffect(() => {
     fetchPages();
@@ -73,7 +65,11 @@ const CategoryPage = () => {
     }
   }, [getPages, slug]);
 
-  const componentOptions = Object.keys(componentMap).map(key => ({ type: key }));
+  const updatePage = (updatedComponents) => {
+    const updatedPage = { ...page, components: updatedComponents };
+    setPage(updatedPage);
+    setCategoryUpdatePages(updatedPage);
+  };
 
   const moveUp = (index) => {
     if (index === 0) return;
@@ -85,7 +81,7 @@ const CategoryPage = () => {
   const moveDown = (index) => {
     if (index === page.components.length - 1) return;
     const updated = [...page.components];
-    [updated[index], updated[index + 1]] = [updated[index + 1], updated[index]];
+    [updated[index + 1], updated[index]] = [updated[index], updated[index + 1]];
     updatePage(updated);
   };
 
@@ -101,18 +97,11 @@ const CategoryPage = () => {
       type,
       ...(template && JSON.parse(JSON.stringify(template)))
     };
-
     const updated = [...page.components];
     updated.splice(newCompIdx + 1, 0, newBlock);
     updatePage(updated);
     setShowModal(false);
     setNewCompIdx(null);
-  };
-
-  const updatePage = (updatedComponents) => {
-    const updatedPage = { ...page, components: updatedComponents };
-    setPage(updatedPage);
-    setCategoryUpdatePages(updatedPage);
   };
 
   const uploadImageToCloudinary = async (file) => {
@@ -123,7 +112,7 @@ const CategoryPage = () => {
 
     const res = await fetch('https://api.cloudinary.com/v1_1/dmss0by2k/image/upload', {
       method: 'POST',
-      body: data,
+      body: data
     });
 
     const result = await res.json();
@@ -145,61 +134,73 @@ const CategoryPage = () => {
     }
   };
 
-  if (!page?.components?.length) {
+  if (!page || Object.keys(page).length === 0) {
     return <h2 className="text-center mt-5">Category not found</h2>;
   }
 
   return (
     <>
       <div className="category-page">
-        {page.components.map((block, idx) => {
-          const Component = componentMap[block.type];
-          if (!Component) return null;
-
-          return (
-            <div key={idx} className="text-center">
-              <div className={`${token ? "block-hover": ""} py-3`} style={{ minHeight: "100px" }}>
-                {token && <div onClick={() => moveUp(idx)} className="triangle-up mx-auto mb-3" style={{ cursor: "pointer" }}></div>}
-               {token &&  <div className='position-relative mx-3 h4' style={{ minHeight: '40px' }}>
-                  <div className="position-absolute top-0 end-0" style={{ cursor: 'pointer' }}>
-                    {['banner', 'carousal'].includes(block.type) && (
-                      <i className="fa-solid fa-image me-3" onClick={() => {
-                        setEditImageModalIndex(idx);
-                        setPreviewImage(page.components[idx]?.coverImage || null);
-                      }}></i>
-                    )}
-                    <i className="fa-solid fa-trash-can" onClick={() => deleteBlock(idx)}></i>
-                  </div>
-                </div>}
-                <Component
-                  {...block}
-                  onPropsChange={(updatedProps) => {
-                    const updatedComponents = [...page.components];
-                    updatedComponents[idx] = {
-                      ...updatedComponents[idx],
-                      ...updatedProps,
-                    };
-                    updatePage(updatedComponents);
-                  }}
-                />
-                {token && <div onClick={() => moveDown(idx)} className="triangle-down mx-auto mt-3" style={{ cursor: "pointer" }}></div>}
+        {page.components.length === 0 ? (
+          <div className="text-center my-4">
+            <p>No components added to this page yet.</p>
+            {token && (
+              <button className="btn btn-warning rounded-circle" onClick={() => {
+                setShowModal(true);
+                setNewCompIdx(-1);
+              }}>+</button>
+            )}
+          </div>
+        ) : (
+          page.components.map((block, idx) => {
+            const Component = componentMap[block.type];
+            if (!Component) return null;
+            return (
+              <div key={idx} className="text-center">
+                <div className={token ? "block-hover" : ""} style={{ minHeight: "100px" }}>
+                  {token && <div onClick={() => moveUp(idx)} className="triangle-up mx-auto mb-3" style={{ cursor: "pointer" }}></div>}
+                  {token && (
+                    <div className='position-relative mx-3 h4' style={{ minHeight: '40px' }}>
+                      <div className="position-absolute top-0 end-0" style={{ cursor: 'pointer' }}>
+                        {['banner', 'carousal'].includes(block.type) && (
+                          <i className="fa-solid fa-image me-3" onClick={() => {
+                            setEditImageModalIndex(idx);
+                            setPreviewImage(block.coverImage || null);
+                          }}></i>
+                        )}
+                        <i className="fa-solid fa-trash-can" onClick={() => deleteBlock(idx)}></i>
+                      </div>
+                    </div>
+                  )}
+                  <Component
+                    {...block}
+                    onPropsChange={(updatedProps) => {
+                      const updatedComponents = [...page.components];
+                      updatedComponents[idx] = { ...updatedComponents[idx], ...updatedProps };
+                      updatePage(updatedComponents);
+                    }}
+                  />
+                  {token && <div onClick={() => moveDown(idx)} className="triangle-down mx-auto mt-3" style={{ cursor: "pointer" }}></div>}
+                </div>
+                <div className="text-center my-2">
+                  {token && (
+                    <div
+                      onClick={() => {
+                        setShowModal(true);
+                        setNewCompIdx(idx);
+                      }}
+                      role="button"
+                      className="rounded-circle bg-warning text-center fw-bold d-inline-flex align-items-center justify-content-center"
+                      style={{ width: '35px', height: '35px', cursor: 'pointer' }}
+                    >
+                      +
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="text-center my-2">
-                {token && <div
-                  onClick={() => {
-                    setShowModal(true);
-                    setNewCompIdx(idx);
-                  }}
-                  role="button"
-                  className="rounded-circle bg-warning text-center fw-bold d-inline-flex align-items-center justify-content-center"
-                  style={{ width: '35px', height: '35px', cursor: 'pointer' }}
-                >
-                  +
-                </div>}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
       {showModal && (
@@ -211,14 +212,14 @@ const CategoryPage = () => {
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
               </div>
               <div className="modal-body">
-                {componentOptions.map((comp, index) => (
+                {Object.keys(componentMap).map((type, index) => (
                   <div key={index} className="d-flex align-items-center mb-2">
                     <div
-                      onClick={() => handleAddComponent(comp.type)}
+                      onClick={() => handleAddComponent(type)}
                       className='box m-2 d-flex border border-primary'
                       style={{ width: '40px', height: '40px', cursor: 'pointer' }}
                     ></div>
-                    <p className="mb-0">{comp.type}</p>
+                    <p className="mb-0">{type}</p>
                   </div>
                 ))}
               </div>
@@ -240,11 +241,7 @@ const CategoryPage = () => {
               </div>
               <div className="modal-body">
                 {previewImage && (
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="img-fluid rounded mb-3"
-                  />
+                  <img src={previewImage} alt="Preview" className="img-fluid rounded mb-3" />
                 )}
                 <input
                   type="file"

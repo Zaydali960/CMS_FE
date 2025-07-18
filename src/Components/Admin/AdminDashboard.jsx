@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from './sidebar';
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 import BasicSettings from './BasicSettings'
+import CreatePages from './CreatePages'
 import Pages from './Pages'
 
 const AdminDashboard = () => {
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
       <Switch>
         <Route exact path="/admin-dashboard/basic-settings" component={BasicSettings} />
         <Route exact path="/admin-dashboard/pages" component={Pages} />
+        <Route exact path="/admin-dashboard/create-pages" component={CreatePages} />
       </Switch>
     </div>
     

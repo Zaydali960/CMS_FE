@@ -69,7 +69,7 @@ const logo = siteData?.logo || ''
                     {slugToName(page.slug)}
                   </Link>
                 ))}
-             {token && <button
+             {/* {token && <button
                 className="btn rounded-circle d-flex justify-content-center align-items-center"
                 style={{
                   width: 35,
@@ -81,7 +81,7 @@ const logo = siteData?.logo || ''
                 onClick={() => setShowModal(true)}
               >
                 +
-              </button>}
+              </button>} */}
             </div>
           </div>
         </div>

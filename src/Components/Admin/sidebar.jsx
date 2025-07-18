@@ -85,24 +85,24 @@ const Sidebar = () => {
                             Pages
                         </Link>
                         {/* {user.email === "admin@me-enterprises.com" && ( */}
-                            {/* <div>
+                            <div>
                                 <Link 
-                                    className={getLinkClasses("/admin-dashboard/create-user", true)}
-                                    to="/admin-dashboard/create-user"
+                                    className={getLinkClasses("/admin-dashboard/create-pages", true)}
+                                    to="/admin-dashboard/create-pages"
                                     onClick={closeMobileMenu}
-                                    style={isActiveLink("/admin-dashboard/create-user") ? { borderRadius: "0.375rem", margin: "0.125rem 0" } : {}}
+                                    style={isActiveLink("/admin-dashboard/create-pages") ? { borderRadius: "0.375rem", margin: "0.125rem 0" } : {}}
                                 >
-                                    Create User
+                                    Create Pages
                                 </Link>
-                                <Link 
+                                {/* <Link 
                                     className={getLinkClasses("/admin-dashboard/view-users", true)}
                                     to="/admin-dashboard/view-users"
                                     onClick={closeMobileMenu}
                                     style={isActiveLink("/admin-dashboard/view-users") ? { borderRadius: "0.375rem", margin: "0.125rem 0" } : {}}
                                 >
                                     View All Users
-                                </Link>
-                            </div> */}
+                                </Link> */}
+                            </div>
                         {/* )} */}
                         
                         {/* Mobile Admin Section */}
@@ -166,17 +166,17 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                             {/* {user.email === "admin@me-enterprises.com" && ( */}
-                                {/* <div>
+                                <div>
                                     <li className="nav-item mb-1">
                                         <Link 
-                                            className={getLinkClasses("/admin-dashboard/create-user")}
-                                            to="/admin-dashboard/create-user"
-                                            style={isActiveLink("/admin-dashboard/create-user") ? { borderRadius: "0.375rem" } : {}}
+                                            className={getLinkClasses("/admin-dashboard/create-pages")}
+                                            to="/admin-dashboard/create-pages"
+                                            style={isActiveLink("/admin-dashboard/create-pages") ? { borderRadius: "0.375rem" } : {}}
                                         >
-                                            <span>Create User</span>
+                                            <span>Create Pages</span>
                                         </Link>
                                     </li>
-                                    <li className="nav-item mb-1">
+                                    {/* <li className="nav-item mb-1">
                                         <Link 
                                             className={getLinkClasses("/admin-dashboard/view-users")}
                                             to="/admin-dashboard/view-users"
@@ -184,8 +184,8 @@ const Sidebar = () => {
                                         >
                                             <span>View All Users</span>
                                         </Link>
-                                    </li>
-                                </div> */}
+                                    </li> */}
+                                </div>
                             {/* )} */}
                         </ul>
                     </div>
