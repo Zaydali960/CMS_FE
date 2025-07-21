@@ -21,7 +21,7 @@ const Carousal = ({ coverImage, text, onPropsChange }) => {
       backgroundColor: '#ffffff' // White background for editor
     }
   }), []);
-
+const token = localStorage.getItem('authToken');
   const handleSave = () => {
     setIsEditing(false);
     if (onPropsChange) {
@@ -59,7 +59,7 @@ const Carousal = ({ coverImage, text, onPropsChange }) => {
               }}
               onDoubleClick={() => setIsEditing(true)}
             >
-              {isEditing ? (
+              {isEditing && token? (
                 <>
                   <JoditEditor
                     value={html}

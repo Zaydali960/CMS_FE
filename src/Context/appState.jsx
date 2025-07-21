@@ -215,12 +215,40 @@ useEffect(() => {
       console.error('Error updating settings:', err.message);
     }
   };
+  
+
+  const updateMetaDetails = async (id, metaTitle, metaDescription) => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/home/update-meta-details/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        metaTitle,
+        metaDescription,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Error updating:", data.message);
+    } else {
+      console.log("Meta details updated successfully:", data);
+      // Optionally: show success message to user
+    }
+  } catch (error) {
+    console.error("Fetch error:", error.message);
+  }
+};
+
 
 
 
 
      return (
-    <AppContext.Provider value={{signIn,loading, token, updateBasicSettings, siteData, categoryUpdatePages, deletePageById, setCategoryUpdatePages, fetchPages, addCategory, updatePages, updateComponents, getPages, setGetPages,newPage, setNewPage}}>
+    <AppContext.Provider value={{signIn,loading,updateMetaDetails, token, updateBasicSettings, siteData, categoryUpdatePages, deletePageById, setCategoryUpdatePages, fetchPages, addCategory, updatePages, updateComponents, getPages, setGetPages,newPage, setNewPage}}>
       {props.children}
     </AppContext.Provider>
   )

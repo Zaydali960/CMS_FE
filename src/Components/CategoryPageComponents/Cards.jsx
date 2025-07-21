@@ -153,7 +153,7 @@ const token = localStorage.getItem('authToken');
                   </div>}
 
                   {/* Title */}
-                  {editingCard === index && editingField === 'title' ? (
+                  {editingCard === index && editingField === 'title' && token ? (
                     <div className="w-100">
                       <JoditEditor
                         value={editingHtml}
@@ -174,7 +174,7 @@ const token = localStorage.getItem('authToken');
                   )}
 
                   {/* Description */}
-                  {editingCard === index && editingField === 'description' ? (
+                  {editingCard === index && editingField === 'description' && token ? (
                     <div>
                       <JoditEditor
                         value={editingHtml}

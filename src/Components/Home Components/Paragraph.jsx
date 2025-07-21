@@ -4,7 +4,7 @@ import JoditEditor from 'jodit-react';
 
 const Paragraph = ({ text, onPropsChange }) => {
   const { siteData } = useContext(AppContext);
-
+const token = localStorage.getItem('authToken');
   const primaryColor = siteData?.primaryColor || '#000000';
   const secondaryColor = siteData?.secondaryColor || '#ffffff';
 
@@ -29,7 +29,7 @@ const Paragraph = ({ text, onPropsChange }) => {
         className="container d-flex flex-column justify-content-center align-items-center text-center my-5 px-3"
         style={{ minHeight: '20vh', backgroundColor: "white" }}
       >
-        {isEditing ? (
+        {isEditing && token ? (
           <>
             <JoditEditor
               value={html}

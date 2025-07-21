@@ -6,6 +6,7 @@ const Carousal = ({ coverImage, text, onPropsChange }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isEditing, setIsEditing] = useState(false);
   const [html, setHtml] = useState(text); // initialize with props.text
+  const token = localStorage.getItem('authToken');
 
   const { siteData } = useContext(AppContext);
 
@@ -59,7 +60,7 @@ const Carousal = ({ coverImage, text, onPropsChange }) => {
               }}
               onDoubleClick={() => setIsEditing(true)}
             >
-              {isEditing ? (
+              {isEditing && token ? (
                 <>
                   <JoditEditor
                     value={html}

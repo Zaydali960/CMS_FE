@@ -13,6 +13,9 @@ export default function Admin() {
   const color = siteData?.tertiaryColor || '#9e9e9eff';
 const token = localStorage.getItem("authToken");
 
+  if(token){
+    history.push("/admin-dashboard/basic-settings")
+  }
 // useEffect(() => {
 //   getBasicSettings();
 // }, []);

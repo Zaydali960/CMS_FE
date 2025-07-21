@@ -7,6 +7,7 @@ const Banner = ({ text, coverImage, onPropsChange }) => {
   
   const [isEditing, setIsEditing] = useState(false);
   const [html, setHtml] = useState(text); // initialize with props.text
+  const token = localStorage.getItem('authToken');
 
   const primaryColor = siteData?.bannerPrimaryColor || '#000'; // Text color
   const secondaryColor = siteData?.bannerSecondaryColor || '#fde68a'; // Background/decoration
@@ -34,7 +35,7 @@ const Banner = ({ text, coverImage, onPropsChange }) => {
           {/* Text Section */}
           <div className="col-12 col-lg-6 order-1 order-lg-2">
             <div className="mb-4" onDoubleClick={() => setIsEditing(true)}>
-              {isEditing ? (
+              {isEditing && token ? (
                 <>
                   <JoditEditor
                     value={html}

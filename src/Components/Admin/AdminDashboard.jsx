@@ -1,11 +1,12 @@
 import React from 'react';
 import Sidebar from './sidebar';
-import { Switch, Route, Link, useLocation } from "react-router-dom";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
 import BasicSettings from './BasicSettings'
 import CreatePages from './CreatePages'
 import Pages from './Pages'
 
 const AdminDashboard = () => {
+ 
   return (
     <div className="container-fluid p-0">
   <div className="row g-0">

@@ -7,6 +7,7 @@ const PromoCardsBlock = ({ text1, text2, image1, image2, onPropsChange }) => {
 
   const primaryColor = siteData?.primaryColor || '#000000';
   const secondaryColor =  '#f5f5f5';
+  const token = localStorage.getItem('authToken');
 
   const [isEditing1, setIsEditing1] = useState(false);
   const [isEditing2, setIsEditing2] = useState(false);
@@ -44,7 +45,7 @@ const PromoCardsBlock = ({ text1, text2, image1, image2, onPropsChange }) => {
             style={{ backgroundColor: secondaryColor, minHeight: '300px' }}
             onDoubleClick={() => setIsEditing1(true)}
           >
-            {isEditing1 ? (
+            {isEditing1 && token? (
               <>
                 <JoditEditor
                   value={html1}
@@ -78,7 +79,7 @@ const PromoCardsBlock = ({ text1, text2, image1, image2, onPropsChange }) => {
             style={{ backgroundColor: secondaryColor, minHeight: '300px' }}
             onDoubleClick={() => setIsEditing2(true)}
           >
-            {isEditing2 ? (
+            {isEditing2  && token ? (
               <>
                 <JoditEditor
                   value={html2}

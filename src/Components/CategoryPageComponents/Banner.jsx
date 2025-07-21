@@ -26,6 +26,7 @@ const Banner = ({ text, coverImage, onPropsChange }) => {
       onPropsChange({ text: html });
     }
   };
+  const token = localStorage.getItem('authToken');
 
   return (
     <section className="py-5">
@@ -34,7 +35,7 @@ const Banner = ({ text, coverImage, onPropsChange }) => {
           {/* Text Section */}
           <div className="col-12 col-lg-6 order-1 order-lg-2">
             <div className="mb-4" onDoubleClick={() => setIsEditing(true)}>
-              {isEditing ? (
+              {isEditing && token ? (
                 <>
                   <JoditEditor
                     value={html}

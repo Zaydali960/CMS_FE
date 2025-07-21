@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../Context/appContext';
 
 const Pages = () => {
-  const { getPages, deletePageById, fetchPages } = useContext(AppContext);
+  const { getPages, deletePageById, fetchPages, updateMetaDetails } = useContext(AppContext);
   const [localPages, setLocalPages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
@@ -65,7 +65,13 @@ const Pages = () => {
       ...selectedPage,
       [e.target.name]: e.target.value
     });
+    console.log(selectedPage)
   };
+
+  const metaDetailsUpdate = ()=>{
+     updateMetaDetails(selectedPage._id, selectedPage.metaTitle, selectedPage.metaDescription)
+       closeModal()
+  }
 
   return (
     <div className="container mt-4">
@@ -162,7 +168,7 @@ const Pages = () => {
                 <button className="btn btn-secondary" onClick={closeModal}>
                   Close
                 </button>
-                <button className="btn btn-primary" onClick={() => alert('Hook up update logic')}>
+                <button className="btn btn-primary" onClick={metaDetailsUpdate}>
                   Save Changes
                 </button>
               </div>
